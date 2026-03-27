@@ -1,0 +1,48 @@
+#gameBoard {
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-rows: 2fr 8fr;
+}
+
+#boardTitle {
+    font-size: 30px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    place-self: center;
+}
+
+#player1Score {
+    font-size: 26px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    place-self: center;
+}
+
+#player2Score {
+    font-size: 26px;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    place-self: center;
+}
+
+#tilesGrid {
+    display: grid;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-template-columns: 3fr 3fr 3fr;
+    grid-template-rows: 3fr 3fr 3fr;
+    place-self: center;
+}
+
+tile {
+    height: 100px;
+    width: 100px;
+}

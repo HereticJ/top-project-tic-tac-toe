@@ -13,20 +13,37 @@ Spending a little time brainstorming here can make your life much easier later!
 
 */
 
-const gameBoardObject = {
-    gameBoard: [],
-};
+// Creates game board as 3x3 grid of buttons.
+const createBoard = (() => {
+    const board = document.querySelector("gameBoard");
+    const tile = document.createElement("button");
+    const boardObject = {
+        boardArray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    };
 
+    console.log(boardObject.boardArray);
+    const makeBoard = ((board) => {
+        for (i = 0; i <= boardObject.boardArray.length; i++) {
+            board.appendChild(tile);
+        };
+        return makeBoard
+    })
+    
+})();
+
+// Stores player 1 data.
 const player1 = {
     name: "",
     score: 0
 };
 
+// Stores player 2 data.
 const player2 = {
     name: "",
     score: 0
 };
 
+// Controls game flow.
 const gameFlow = {
     player1Score: 0,
     player2Score: 0,
