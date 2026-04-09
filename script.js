@@ -1,14 +1,54 @@
-// Creates game board as 3x3 grid of buttons.
-function GameBoard = (() => {
-    let board;
+// Represents game board as 3x3, 2D grid.
+function GameBoard() {
+    const rows = 3;
+    const columns = 3;
+    const board = [];
 
-    const boardSquares = (1, 2, 3, 4, 5, 6, 7, 8, 9) => {
-        board = [boardSquares];
-        return board;
+    // 
+    for (let i = 0; i < rows; i++) {
+        board[i] = [];
+        for (let j = 0; j < columns; j++) {
+            board[i].push(Square());
+        }
+    }
+
+    const getBoard = () => board;
+
+    const choice = (square, player) => {
+        const availableSquares = board
+        .filter((row) => row[column].getValue() === 0)
+        .map ((row) => row[column]);
+
+    if (!availableSquares.length) return;
+
+    const choiceRemove = availableSquares.length - 1;
+    board[choiceRemove][column].addChoice(player);
     };
 
+    const printBoard = () => {
+        const boardWithSquareValues = board.map((row) => 
+            row.map((square) => square.getValue())
+        );
+        console.log(boardWithCellValues);
+    };
 
-};
+    return {getBoard, choice, printBoard };
+}
+
+function Square() {
+    let value = 0;
+
+    const addSquare = (player) => {
+        value = player;
+    };
+
+    const getValue = () => value;
+
+    return {
+        addSquare,
+        getValue,
+    };
+}
 /*
 function createPlayer(num) {
     const playerOne = "Player" + " num";
