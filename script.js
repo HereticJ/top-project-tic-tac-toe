@@ -1,54 +1,60 @@
-// Represents game board as 3x3, 2D grid.
-function GameBoard() {
-    const rows = 3;
-    const columns = 3;
-    const board = [];
+// Game board represents the nine squares available in Tic-Tac-Toe from bottom
+// left to upper-right.
+const GameBoard = (() => {
+    const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    console.log(board);
+    let choice;
 
-    // 
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < columns; j++) {
-            board[i].push(Square());
-        }
-    }
-
-    const getBoard = () => board;
-
-    const choice = (square, player) => {
-        const availableSquares = board
-        .filter((row) => row[column].getValue() === 0)
-        .map ((row) => row[column]);
-
-    if (!availableSquares.length) return;
-
-    const choiceRemove = availableSquares.length - 1;
-    board[choiceRemove][column].addChoice(player);
+    const markP1Choice = x => {
+        let p1Choice = [x];
+        choice = board.splice(x, 1);
+        console.log(board);
+        console.log(p1Choice);
+        return choice;
     };
 
-    const printBoard = () => {
-        const boardWithSquareValues = board.map((row) => 
-            row.map((square) => square.getValue())
-        );
-        console.log(boardWithCellValues);
+    const markP2Choice = y => {
+        let p2Choice = [y];
+        choice = board.splice(y, 1);
+        console.log(board);
+        console.log(p2Choice);
+        return choice;
     };
 
-    return {getBoard, choice, printBoard };
+    return { board, markP1Choice, markP2Choice };
+})();
+
+console.log(GameBoard.markP1Choice(0));
+console.log(GameBoard.markP2Choice(1));
+
+function createPlayer(num, score) {
+    const player = "Player " + num;
+
+    let points = 0;
+    score = points;
+    const getPoints = () => points;
+    const givePoints = () => { points++; };
+
+    return { num, player, getPoints, givePoints };
 }
 
-function Square() {
-    let value = 0;
+const one = createPlayer(1);
+one.givePoints();
+one.givePoints();
 
-    const addSquare = (player) => {
-        value = player;
-    };
+const two = createPlayer(2);
+two.givePoints();
 
-    const getValue = () => value;
+console.log({
+    player: one.player,
+    score: one.getPoints()
+});
+console.log({
+    player: two.player,
+    score: two.getPoints()
+});
 
-    return {
-        addSquare,
-        getValue,
-    };
-}
+
 /*
 function createPlayer(num) {
     const playerOne = "Player" + " num";
@@ -109,4 +115,5 @@ function createPlayer(num) {
 };
 gameFlow();
 */
-GameBoard();
+
+
