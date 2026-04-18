@@ -1,91 +1,72 @@
 // Game board represents the nine squares available in Tic-Tac-Toe from bottom
 // left to upper-right.
 const GameBoard = (() => {
-    const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    console.log(board);
-    let choice;
-
-    const markP1Choice = x => {
-        let p1Choice = [x];
-        choice = board.splice(x, 1);
-        console.log(board);
-        console.log(p1Choice);
-        return choice;
-    };
-
-    const markP2Choice = y => {
-        let p2Choice = [y];
-        choice = board.splice(y, 1);
-        console.log(board);
-        console.log(p2Choice);
-        return choice;
-    };
-
-    return { board, markP1Choice, markP2Choice };
+    let board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    return board;
 })();
 
-console.log(GameBoard.markP1Choice(0));
-console.log(GameBoard.markP2Choice(1));
+// Function to dictate game flow, determine which player is playing on which
+// turn, define the win state, and assign points to the winner.
+function gameFlow() {
 
-function createPlayer(num, score) {
-    const player = "Player " + num;
+    // Creates player object and assigns them as player 1 or player 2.
+    function createPlayer(num) {
+        let player = "Player " + num;
+        // Declares points as a private variable along with private functions to 
+        // assign and return points for a given player.
+        let points = 0;
+        const getPoints = () => points;
+        const givePoints = () => { points++ };
+        return { num, player, getPoints, givePoints };
+    };
 
-    let points = 0;
-    score = points;
-    const getPoints = () => points;
-    const givePoints = () => { points++; };
+    // Creates players.
+    const p1 = createPlayer(1);
+    const p2 = createPlayer(2);
 
-    return { num, player, getPoints, givePoints };
-}
+    // Tracks player's chosen squares.
+    let p1Squares = [];
+    let p2Squares = [];
 
-const one = createPlayer(1);
-one.givePoints();
-one.givePoints();
+    // Creates game board.
+    let currentBoard = GameBoard;
 
-const two = createPlayer(2);
-two.givePoints();
+    // Initializes turn variable.
+    let turn;
+    let next = turn++;
 
-console.log({
-    player: one.player,
-    score: one.getPoints()
-});
-console.log({
-    player: two.player,
-    score: two.getPoints()
-});
+    // Determine's which player's turn it is and advances to the next turn.
+    function turnCounter(player) {
+        const playerTurn = (turn % 2 !== 0);
+        console.log(currentBoard);
+        if (playerTurn === true) {
+            return { player = one };
+        } else {
+            return { player = two };
+        }
+    };
 
+    function round(turn) {
+        // Displays available squares to players.
+        console.log(GameBoard);
 
-/*
-function createPlayer(num) {
-    const playerOne = "Player" + " num";
-    return { Player, num };
-
-};
-    
-    function gameFlow() {
-        let p1Squares = [];
-        let p2Squares = [];
-        let p1Wins = [];
-        let p2Wins = [];
-        let ties = [];
-        
-            for (i = 1; i < 9; i++) {
-                let turnCount = `${i}`;
-                    if (isOdd(turnCount) !== 0) {
-                        GameBoard.squares.splice(4, 1);
-                        GameBoard.p1Squares += 5;
-                        GameBoard.board += 5;
-                        console.log("Player 1 chooses 5.")
-                        console.log(GameBoard.squares);
-                    } else if (isOdd(turnCount) == 0) {
-                        GameBoard.squares.splice(0, 1);
-                        GameBoard.p2Squares += 1;
-                        GameBoard.board += 1;
-                        console.log("Player 2 chooses 1.")
-                        console.log(GameBoard.squares);
+        // Prompts player to choose a square.
+        console.log(`${player}: Choose an available square.`);
+        player.square = "1";
+        console.log(`Player ${player} chose ${player.square}`);
+        currentBoard.splice(`${player}`.square, 1);
+        p1Squares += currentBoard.slice(`${player}`.square);
+        next;
 };
 
+function winTracker() {
+    if (turn === 9) {
+        console.log("It's a tie.");
+        currentBoard = GameBoard;
+    }
+};
 
+gameFlow();
 
 /*
         if (p1Squares.includes((123 || 456 || 789 || 147 || 258 || 369 || 
@@ -98,22 +79,7 @@ function createPlayer(num) {
             console.log("Player 2 wins!");
             p2Score++;
             return;
-        } else {
-            p1Turn1;
-            p1Squares += (`${p1Turn}` + ", ");
-            board.splice(`${p1Turn}`, 1);
-            console.log(`${p1Squares}`);
-            p2Turn1;
-            p2Squares += p2Turn1;
-            board.splice(`${p2Turn}`, 1);
-            console.log(`${p2Squares}`);
-            console.log(board);
 
-
-        };
-    };
-};
-gameFlow();
 */
 
 
