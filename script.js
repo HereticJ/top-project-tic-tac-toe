@@ -1,5 +1,6 @@
 // Dictates game flow.
 function gameFlow() {
+    let turn = 0;
     // Game board represents the nine squares available in Tic-Tac-Toe ordered
     // from bottom left to upper-right.
     const GameBoard = (() => {
@@ -21,17 +22,21 @@ function gameFlow() {
     let p1S = players.p1Squares;
     let p2S = players.p2Squares;
     let board = GameBoard.board;
+    let winBreak = false;
+    console.log(winBreak);
     
     // Loop to assign turns to players based on whether the turn is even or 
     // odd.
     function turnController(winBreak) {
         let player;
         // Checks to make sure turns don't exceed 9 turns.
-        for (let turn = 0; turn <= 8; turn++) {
+        for (turn = 0; turn <= 8; turn++) {
             // Checks for win state in players' chosen squares array.
             winCheck(players);
+            console.log(p1S);
             // Breaks if a player successfully chooses three squares in a row.
             if (winBreak === true) {
+                console.log(winBreak);
                 break;
             } else {
                 // Assigns Player 1's turn as long as turn counter is an even 
@@ -45,64 +50,78 @@ function gameFlow() {
                     turn == 9) {
                     player = players.two;
                     return { player };
+                } else if ((turn >= 9) && (winBreak === false)) {
+                    console.log("Oh no! It's a tie!");
+                    console.log(winBreak);
+                    break;
                 }
             }
         }
     };
+
     // Assigns Player choices to their player object squares array.
     function playerChoice(players, choice) {
-        if (players === p1) {
-            p1S += choice;
-            console.log(`Player 1 Chose ${choice}`)
-            console.log(`Player 1 Squares: ${p1S}`)
+        if (winBreak === true) {
         } else {
-            p2S += choice;
-            console.log(`Player 2 Chose ${choice}`)
-            console.log(`Player 2 Squares: ${p2S}`)
+            if (players === p1) {
+                p1S.push(choice);
+                console.log(`Player 1 Chose ${choice}`)
+                console.log(`Player 1 Squares: ${p1S}`)
+                turn++;
+                turnController();
+            } else {
+                p2S.push(choice);
+                console.log(`Player 2 Chose ${choice}`)
+                console.log(`Player 2 Squares: ${p2S}`)
+                turn++;
+                turnController();
             }
-    };
-    // Checks if player squares match a win state.
-    function winCheck(players) {
-        if (p1S == "123" || p1S == "213" || p1S == "321" || p1S == "231" || 
-            p1S == "312" || p1S == "132" || p1S == "456" || p1S == "465" || 
-            p1S == "654" || p1S == "645" || p1S == "564" || p1S == "546" || 
-            p1S == "789" || p1S == "798" || p1S == "879" || p1S == "897" || 
-            p1S == "987" || p1S == "978" || p1S == "147" || p1S == "174" || 
-            p1S == "417" || p1S == "471" || p1S == "714" || p1S == "741" || 
-            p1S == "285" || p1S == "258" || p1S == "369" || p1S == "396" || 
-            p1S == "639" || p1S == "693" || p1S == "963" || p1S == "936" || 
-            p1S == "159" || p1S == "519" || p1S == "591" || p1S == "951" || 
-            p1S == "915" || p1S == "357" || p1S == "375" || p1S == "537" || 
-            p1S == "573" || p1S == "753" || p1S == "735") {
-                winBreak = true;
-                return console.log("Player 1 Wins!");
-        } else if (p2S == "123" || p2S == "213" || p2S == "321" || p2S == 
-            "231" || p2S == "312" || p2S == "132" || p2S == "456" || p2S == 
-            "465" || p2S == "654" || p2S == "645" || p2S == "564" || p2S == 
-            "546" || p2S == "789" || p2S == "798" || p2S == "879" || p2S == 
-            "897" || p2S == "987" || p2S == "978" || p2S == "147" || p2S == 
-            "174" || p2S == "417" || p2S == "471" || p2S == "714" || p2S == 
-            "741" || p2S == "285" || p2S == "258" || p2S == "369" || p2S == 
-            "396" || p2S == "639" || p2S == "693" || p2S == "963" || p2S == 
-            "936" || p2S == "159" || p2S == "519" || p2S == "591" || p2S == 
-            "951" || p2S == "915" || p2S == "357" || p2S == "375" || p2S == 
-            "537" || p2S == "573" || p2S == "753" || p2S == "735") {
-                winBreak = true;
-                return console.log("Player 2 Wins!");
         }
     };
 
-    turnController();
-    playerChoice(p1, 1);
-    turnController();
-    playerChoice(p2, 2);
-    turnController();
+    function winCheckwww(playerSquares, requiredValues) {
+        return requiredValues.every(value => playerSquares.includes(value));
+    }
+
+
+    // Checks if player squares match a win state.
+    function winCheck(players) {
+        let p1Sort = p1S.sort();
+        let p2Sort = p2S.sort();
+        console.log(p1Sort.includes);
+        console.log(p2Sort);
+
+        if ((p1Sort.includes([1, 2, 3])) || (p1Sort.includes([4, 5, 6])) || 
+        (p1Sort.includes([7, 8, 9])) || (p1Sort.includes([1, 4, 7])) || 
+        (p1Sort.includes([2, 5, 8])) || (p1Sort.includes([3, 6, 9])) || 
+        (p1Sort.includes([1, 5, 7])) || (p1Sort.includes([3, 5, 7]))) {
+            winBreak = true;
+            console.log(winBreak);
+            console.log(p1S);
+            console.log("Game Over! Player 1 Wins!");
+        } else if ((p2Sort.includes([1 && 2 && 3])) || (p2Sort.includes([4 && 5 && 6])) || 
+        (p2Sort.includes([7 && 8 && 9])) || (p2Sort.includes([1 && 4 && 7])) || 
+        (p2Sort.includes([2 && 5 && 8])) || (p2Sort.includes([3 && 6 && 9])) || 
+        (p2Sort.includes([1 && 5 && 7])) || (p2Sort.includes([3 && 5 && 7]))) {
+            winBreak = true;
+            console.log(winBreak);
+            console.log(p2S);
+            console.log("Game Over! Player 2 Wins!");
+        } else if ((turn >= 9) && (winBreak === false)) {
+            console.log("Game over! It's a tie...")
+        }
+    };
+
+    turnController(winBreak);
+    playerChoice(p1, 2);
+    playerChoice(p2, 4);
+    playerChoice(p1, 3);
+    playerChoice(p2, 8);
     playerChoice(p1, 5);
-    turnController();
-    playerChoice(p2, 3);
-    turnController();
-    playerChoice(p1, 9);
-    turnController();
+    playerChoice(p2, 7);
+    playerChoice(p1, 8);
+    playerChoice(p2, 9);
+    playerChoice(p1, 1);
 };
 gameFlow();
 
