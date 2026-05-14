@@ -31,7 +31,7 @@
     place-self: center;
 }
 
-#tilesGrid {
+#squaresGrid {
     display: grid;
     grid-row-start: 2;
     grid-row-end: 3;
@@ -42,7 +42,18 @@
     place-self: center;
 }
 
-tile {
+#playerTurn {
+    height: 20px;
+    width: 100px;
+    justify-self: center;
+}
+
+square {
     height: 100px;
     width: 100px;
+}
+
+button {
+    height: 150px;
+    width: 150px;
 }

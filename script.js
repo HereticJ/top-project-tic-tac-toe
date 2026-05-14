@@ -59,46 +59,55 @@ function gameFlow() {
             p1S.push(choice);
             console.log(`Player 1 Chose ${choice}`)
             console.log(`Player 1 Squares: ${p1S}`)
+            return turn;
         } else if (turn == 1) {
             choice = 4;
             p2S.push(choice);
             console.log(`Player 2 Chose ${choice}`)
             console.log(`Player 2 Squares: ${p2S}`)
+            return turn;
         } else if (turn == 2) {
             choice = 2;
             p1S.push(choice);
             console.log(`Player 1 Chose ${choice}`)
             console.log(`Player 1 Squares: ${p1S}`)
+            return turn;
         } else if (turn == 3) {
             choice = 5;
             p2S.push(choice);
             console.log(`Player 2 Chose ${choice}`)
             console.log(`Player 2 Squares: ${p2S}`)
+            return turn;
         } else if (turn == 4 && winBreak == false) {
             choice = 7;
             p1S.push(choice);
             console.log(`Player 1 Chose ${choice}`)
             console.log(`Player 1 Squares: ${p1S}`)
+            return turn;
         } else if (turn == 5 && winBreak == false) {
             choice = 6;
             p2S.push(choice);
             console.log(`Player 2 Chose ${choice}`)
             console.log(`Player 2 Squares: ${p2S}`)
+            return turn;
         } else if (turn == 6 && winBreak == false) {
             choice = 7;
             p1S.push(choice);
             console.log(`Player 1 Chose ${choice}`)
             console.log(`Player 1 Squares: ${p1S}`)
+            return turn;
         } else if (turn == 7 && winBreak == false) {
             choice = 8;
             p2S.push(choice);
             console.log(`Player 2 Chose ${choice}`)
             console.log(`Player 2 Squares: ${p2S}`)
+            return turn;
         } else if (turn == 8 && winBreak == false) {
             choice = 9;
             p1S.push(choice);
             console.log(`Player 1 Chose ${choice}`)
             console.log(`Player 1 Squares: ${p1S}`)
+            return turn;
         } else if (turn == 9 && winBreak == false) {
             return console.log("Game over! It's a tie...")
         }
@@ -131,9 +140,46 @@ function gameFlow() {
             console.log("Game over! It's a tie...")
         }
     }
-    // Calls turn function to start the game.
-    turnController();
+
+    function gameUI(GameBoard, players, turnController) {
+        const squares = document.querySelector("#squaresGrid");
+        const turnPrint = document.querySelector("#playerTurn");
+        const gameDisplay = document.querySelector("#gameUI");
+        turnPrint.textContent  = `Player ${turn + 1}'s turn`;
+
+            if (turn == 0 || turn == 2 || 
+                turn == 4 || turn == 6 || turn == 8) {
+            turnPrint.textContent = "Player 1's turn"
+            } else {
+                turnPrint.textContent = "Player 2's turn"
+            };
+
+            for (let i = 0; i <= 8; i++) {
+            let square = document.createElement("button");
+            square.textContent = i;
+            squares.appendChild(square);
+
+            square.addEventListener("click", chooseSquare)
+            function chooseSquare() {
+                if (turn == 0 || turn == 2 || 
+                turn == 4 || turn == 6 || turn == 8) {
+                    square.textContent = "X";
+                    square.disabled;
+                    return turn++;
+                } else if (turn == 1 || turn == 3 || 
+                turn == 5 || turn == 7 || turn == 9) {
+                    square.textContent = "O"
+                    square.disabled;
+                    return turn++;
+                }
+            }
+        }
+    }
+        // Calls turn function to start the game.
+        turnController();
+        gameUI();
 };
+
 // Calls gameFlow function to start the game.
 gameFlow();
 
