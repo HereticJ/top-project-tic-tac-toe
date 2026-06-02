@@ -5,7 +5,6 @@
 }
 
 #boardTitle {
-    font-size: 30px;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
@@ -13,25 +12,11 @@
     place-self: center;
 }
 
-#player1Score {
-    font-size: 26px;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
+#turnDisplay {
     place-self: center;
 }
 
-#player2Score {
-    font-size: 26px;
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    place-self: center;
-}
-
-#squaresGrid {
+#board {
     display: grid;
     grid-row-start: 2;
     grid-row-end: 3;
@@ -42,18 +27,7 @@
     place-self: center;
 }
 
-#playerTurn {
-    height: 20px;
-    width: 100px;
-    justify-self: center;
-}
-
-square {
-    height: 100px;
-    width: 100px;
-}
-
 button {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
 }
