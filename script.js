@@ -12,6 +12,10 @@ console.log(GameBoard);
 let tempBoard = GameBoard.board;
 console.log(tempBoard);
 
+let globalSquares;
+
+let allButtons = document.querySelector("#buttonWrapper");
+
 function turnController(board) {
     for (let i = 0; i <= board.length; i++) {
         let turn = i;
@@ -36,11 +40,11 @@ function turnController(board) {
 };
 
 turnController(tempBoard);
+
 const displayController = (() => {
     const boardSquares = document.querySelector("#board");
     const turnDisplay = document.querySelector("#turnDisplay");
     const turnText = document.createElement("h2");
-    const squareButton = document.createElement("button");
     turnText.textContent = "Player 1's Turn"
         if (p1Turn === true) {
             turnText.textContent = "Player 1's Turn"
@@ -54,12 +58,27 @@ const displayController = (() => {
             display.appendChild(turnDisplay);
         }
 
-        for (let i = 0; i <= tempBoard.length; i++) {
-            boardSquares.appendChild(`${squareButton} + i`);
+        for (let i = 0; i < tempBoard.length; i++) {
+            let square = document.createElement("button");
+            let squares = document.querySelectorAll("button");
+            square.value = i;
+            square.id = (i);
+            allButtons.appendChild(square);
+            globalSquares = squares;
         };
     
 })();
 
+function clickController(buttonWrapper) {
+    buttonWrapper.addEventListener("click", choice);
+        function choice() {
+            const isButton = event.target.nodeName === `BUTTON`;
+            if (!isButton) {
+                return;
+            }
+            console.log("click registered");
+        }
+}
 
 function createPlayer(num) {
     const newPlayer = "p" + num;
