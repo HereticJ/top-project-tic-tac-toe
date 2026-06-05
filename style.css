@@ -26,4 +26,9 @@
 button {
     height: 200px;
     width: 200px;
+    background-color: #AAFF99;
+}
+
+.disabled {
+    background-color: #FFB3B3;
 }

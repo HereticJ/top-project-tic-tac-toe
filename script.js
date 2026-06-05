@@ -36,38 +36,57 @@ const displayController = (() => {
 GameBoard;
 console.log(GameBoard);
 
-
-
-
-
 let turn = 1;
+let p1Turn;
+let p2Turn;
+let p1Squares = [];
+let p2Squares = [];
+let turnDisplayText = turnDisplay.textContent;
 
+function turnController() {
+    turnDisplayText = (`Player ${turn}'s Turn`);
+    console.log(`Turn: ${turn}`);
+    const turnCheck = (turn % 2);
 
-
-
-
-
-function turnController(turn) {
-    turnDisplay.textContent = `Player ${turn}'s Turn`;
-    console.log(`Turn: ${turn}`)
-        if (turn % 2 === 0) {
+        if (turnCheck === 0) {
+            p1Turn = false;
             p2Turn = true;
             display.removeChild(turnDisplay)
-            turnDisplay.textContent = "Player 2's Turn"
+            turnDisplayText = "Player 2's Turn"
             display.appendChild(turnDisplay);
             return;
-        } else if (turn % 2 != 0) {
+        } else if (turnCheck != 0) {
+            p2Turn = false;
             p1Turn = true;
             display.removeChild(turnDisplay)
-            turnDisplay.textContent = "Player 1's Turn"
+            turnDisplayText = "Player 1's Turn"
             display.appendChild(turnDisplay);
-            return;
-        } else if (turn => 10) {
             return;
         } else {
             return;
         };
 };
+
+buttonWrapper.addEventListener("click", choice);
+    function choice(button, p1Turn, p2Turn) {
+        let clickedButton = button.target;
+        clickedButton.classList.add(`disabled`);
+        while (p1Turn === true && p2Turn === false) {
+            p1Squares.push(clickedButton.value);
+            console.log(p1Squares);
+            turnController(turn);
+        };
+        while (p2Turn === true && p1Turn === false) {
+            p1Squares.push(clickedButton.value);
+            console.log(button.value);
+            turnController(turn);
+        }
+        console.log(button.target);
+        clickedButton.disabled = true;
+        turn++;
+        
+        console.log(`Turn: ${turn}`);
+    };
 
 function createPlayer(num) {
     const newPlayer = "p" + num;
@@ -79,17 +98,18 @@ function createPlayer(num) {
     return { num, newPlayer, getChoices, giveChoice };
 }
 
-buttonWrapper.addEventListener("click", choice);
-    function choice(button) {
-        console.log(button.target);
-        turn = turn++;
-        console.log(`Turn: ${turn}`);
-    };
-
 
 
 
 turnController();
+
+
+
+
+
+
+
+
 
 /*
 // Dictates game flow.
