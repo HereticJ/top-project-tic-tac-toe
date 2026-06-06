@@ -4,13 +4,9 @@ const GameBoard = (() => {
     const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const [ele1, ele2, ele3, ele4, ele5, ele6, ele7, ele8, ele9] = board;
 
-    const p1 = createPlayer("1");
-    const p2 = createPlayer("2");
-    p1;
-    p2;
-
     return { board };
 })()
+
 
 let tempBoard = GameBoard.board;
 console.log(tempBoard);
@@ -24,12 +20,12 @@ const turnDisplay = document.querySelector("#turnDisplay");
 const displayController = (() => {
     const boardSquares = document.querySelector("#board");
         for (let i = 0; i < 9; i++) {
-            let square = document.createElement("button");
-            let squares = document.querySelectorAll("button");
-            square.value = i;
-            square.id = (i);
-            allButtons.appendChild(square);
-            globalSquares = squares;
+            let squareButton = document.createElement("button");
+            let squaresDisplay = document.querySelectorAll("button");
+            squareButton.value = i;
+            squareButton.id = (i);
+            allButtons.appendChild(squareButton);
+            globalSquares = squaresDisplay;
         };
 })();
 
@@ -37,25 +33,45 @@ GameBoard;
 console.log(GameBoard);
 
 let turn = 1;
-let p1Turn;
-let p2Turn;
 let p1Squares = [];
 let p2Squares = [];
 let turnDisplayText = turnDisplay.textContent;
 
-function turnController() {
+function turnController(turn) {
+    return function turnCheck(player) {
+        if (turn % 2 === 0) {
+            player = p2;
+            console.log(p2);
+        } else if (turn % 2 != 0) {
+            player = p1;
+            console.log(p1);
+        }
+    }
+}
+
+turnController(turn);
+console.log(turn);
+
+
+
+
+// MAYBE SEE IF A LOOP CAN MAKE THIS WORK.
+function turnController(p1Turn, p2Turn) {
+    const turnCheck = (turn % 2 === 0);
     turnDisplayText = (`Player ${turn}'s Turn`);
     console.log(`Turn: ${turn}`);
-    const turnCheck = (turn % 2);
+    p1Turn = false;
+    p2Turn = false;
 
-        if (turnCheck === 0) {
+    turnCheck;
+        if (turnCheck === true) {
             p1Turn = false;
             p2Turn = true;
             display.removeChild(turnDisplay)
             turnDisplayText = "Player 2's Turn"
             display.appendChild(turnDisplay);
             return;
-        } else if (turnCheck != 0) {
+        } else if (turnCheck === false) {
             p2Turn = false;
             p1Turn = true;
             display.removeChild(turnDisplay)
@@ -67,15 +83,23 @@ function turnController() {
         };
 };
 
+
+
+
+
 buttonWrapper.addEventListener("click", choice);
     function choice(button, p1Turn, p2Turn) {
         let clickedButton = button.target;
         clickedButton.classList.add(`disabled`);
+        console.log(p1Turn);
+        console.log(p2Turn);
+
         while (p1Turn === true && p2Turn === false) {
             p1Squares.push(clickedButton.value);
             console.log(p1Squares);
             turnController(turn);
         };
+        
         while (p2Turn === true && p1Turn === false) {
             p1Squares.push(clickedButton.value);
             console.log(button.value);
@@ -84,7 +108,6 @@ buttonWrapper.addEventListener("click", choice);
         console.log(button.target);
         clickedButton.disabled = true;
         turn++;
-        
         console.log(`Turn: ${turn}`);
     };
 
