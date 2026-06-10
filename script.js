@@ -12,25 +12,36 @@ console.log(tempBoard);
 
 const allButtons = document.querySelector("#buttonWrapper");
 const display = document.querySelector("#display");
-const turnDisplay = document.querySelector("#turnDisplay");
+const turnDisplay = document.createElement("h4");
 let globalSquares = [];
 let p1Squares = [];
 let p2Squares = [];
 let turn = 1;
-let playerTurn;
+let playerTurn = "Player 1";
 
 const displayController = (() => {
     const boardSquares = document.querySelector("#board");
-        for (let i = 0; i < 9; i++) {
-            let squareButton = document.createElement("button");
-            let squaresDisplay = document.querySelectorAll("button");
-            squareButton.value = i;
-            squareButton.id = (i);
-            allButtons.appendChild(squareButton);
-            globalSquares = squaresDisplay;
-        };
-    turnDisplay.textContent = ("Player 1: Choose a Square")
+        turnDisplay.textContent = (`Player 1 Choose a Square`);
+        display.appendChild(turnDisplay);
+            for (let i = 0; i < 9; i++) {
+                let squareButton = document.createElement("button");
+                let squaresDisplay = document.querySelectorAll("button");
+                squareButton.value = i;
+                squareButton.id = (i);
+                allButtons.appendChild(squareButton);
+                globalSquares = squaresDisplay;
+            };
 })();
+
+function createPlayer(num) {
+    const newPlayer = "p" + num;
+    let choice = 0;
+    let choices = [];
+    const getChoices = () => choices;
+    const giveChoice = (choice) => { choices.push(choice); };
+
+    return { num, newPlayer, getChoices, giveChoice };
+}
 
 GameBoard;
 console.log(GameBoard);
@@ -38,26 +49,21 @@ console.log(GameBoard);
 
 function turnController(turn) {
     const turnCheck = (turn % 2 === 0);
-    let turnText = turnDisplay.textContent;
-    turnCheck;
-        while (turnCheck === true) {
-            playerTurn = 2;
-            console.log(turnCheck);
-            display.removeChild(turnDisplay);
-            turnText = `Player ${playerTurn}'s Turn`;
-            display.appendChild(turnDisplay);
-            return;
-        };
-        while (turnCheck === false) {
-            console.log(turnCheck);
-            display.removeChild(turnDisplay);
-            turnText = `Player ${playerTurn}'s Turn`;
-            display.appendChild(turnDisplay);
-            playerTurn = 1;
-            return;
-        }
-    
+
+    function getTurn(turn) {
+        turnCheck ? "Player 2" : "Player 1";
+        playerTurn = `${turnCheck}`;
+        turnCheck;
+        return playerTurn;
+    };
+
+    console.log(`${playerTurn}`);
+    turnDisplay.textContent = `playerTurn Choose a Square`;
+    display.appendChild(turnDisplay);
+    return playerTurn, getTurn(turn);
+
 };
+
 
 buttonWrapper.addEventListener("click", turnChange)
     function turnChange() {
@@ -71,6 +77,7 @@ buttonWrapper.addEventListener("click", choice);
         let clickedButton = button.target;
         clickedButton.classList.add(`disabled`);
 
+        /*
         while (p1Turn === true && p2Turn === false) {
             p1Squares.push(clickedButton.value);
             console.log(p1Squares);
@@ -81,31 +88,17 @@ buttonWrapper.addEventListener("click", choice);
             console.log(button.value);
             turnController(turn);
         }
-
-        console.log(button.target);
+        */
+        console.log(button.target.value);
         clickedButton.disabled = true;
-        turn++;
         console.log(`Turn: ${turn}`);
     };
-
-function createPlayer(num) {
-    const newPlayer = "p" + num;
-    let choice = 0;
-    let choices = [];
-    const getChoices = () => choices;
-    const giveChoice = (choice) => { choices.push(choice); };
-
-    return { num, newPlayer, getChoices, giveChoice };
-}
-
-
-
 
 turnController(turn);
 
 
 
-
+// git message: ","
 
 
 /*
