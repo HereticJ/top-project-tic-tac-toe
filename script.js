@@ -6,7 +6,6 @@ const GameBoard = (() => {
     return { board };
 })();
 
-
 // Creates 9 squares and displays who's turn it is (Player 1 or 2).
 const displayController = (() => {
     const display = document.querySelector("#display");
@@ -27,14 +26,7 @@ const displayController = (() => {
     };
 })();
 
-let buttons = document.querySelectorAll('button');
 let winState = false;
-
-function disableGame() {
-    if (winState === true) {
-        buttons.classList.add(`disabled`);
-    }
-};
 
 // Initializes first turn and square variable to represent player's choice.
 let turn = 1;
@@ -82,7 +74,6 @@ function winCheck(allButtons) {
             (p1S.includes(`1`) && p1S.includes(`5`) && p1S.includes(`9`)) ||
             (p1S.includes(`3`) && p1S.includes(`5`) && p1S.includes(`7`))) {
                 winState = true;
-                disableGame()
                 turnDisplay.textContent = "Player 1 Wins!";
                 display.appendChild(turnDisplay);
                 return winState;
@@ -95,7 +86,6 @@ function winCheck(allButtons) {
             (p2S.includes(`1`) && p2S.includes(`5`) && p2S.includes(`9`)) ||
             (p2S.includes(`3`) && p2S.includes(`5`) && p2S.includes(`7`))) {
                 winState = true;
-                disableGame()
                 turnDisplay.textContent = "Player 2 Wins!";
                 display.appendChild(turnDisplay);
                 return winState;
@@ -109,20 +99,18 @@ function winCheck(allButtons) {
 // runs winCheck function (winCheck FUNCTION NOT WORKING).
 buttonWrapper.addEventListener("click", choice);
     function choice(button, squares) {
+        const addImage = document.createElement("IMG");
+
         let clickedButton = button.target;
         let square = clickedButton.value;
-            if (winState === true) {
-
-            } else {
-                if (playerTurn === "Player 1") {
-                    player1.giveSquare(square);
-                    player1.getSquares();
-                    winCheck();
-                } else if (playerTurn === "Player 2") {
-                    player2.giveSquare(square);
-                    player2.getSquares();
-                    winCheck();
-                }
+            if (playerTurn === "Player 1") {
+                player1.giveSquare(square);
+                player1.getSquares();
+                winCheck();
+            } else if (playerTurn === "Player 2") {
+                player2.giveSquare(square);
+                player2.getSquares();
+                winCheck();
             };
         clickedButton.classList.add(`disabled`);
         clickedButton.disabled = true;
@@ -132,12 +120,16 @@ buttonWrapper.addEventListener("click", choice);
 buttonWrapper.addEventListener("click", turnChange)
     function turnChange() {
         if (winState === false) {
-        turn++;
-        turnController();
-    } else {
-        
-        return;
-    }
+            turn++;
+            turnController();
+        } else if (winState === true) {
+            const buttons = document.querySelectorAll(`button`);
+            for (button of buttons) {
+                button.classList.add(`disabled`);
+                button.disabled = true;
+            }
+        };
+            return;
 };
 
 // Creates players and initializes first turn.
@@ -145,6 +137,4 @@ const player1 = createPlayer(1);
 const player2 = createPlayer(2);
 turnController();
 
-// git message: "Display properly writes which player wins when win state is 
-// reached, added function to disable buttons when win state is reached, but
-//  isn't working yet."
+// git message: "Buttons now disable when win state is reached by either player."
