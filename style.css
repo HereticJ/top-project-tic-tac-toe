@@ -31,4 +31,6 @@ button {
 
 .disabled {
     background-color: #FFB3B3;
+    font-size: 180px;
+    place-self: center;
 }

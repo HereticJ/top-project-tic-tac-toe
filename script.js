@@ -52,19 +52,17 @@ function turnController() {
         turnDisplay.textContent = `${playerTurn} Choose a Square`;
         display.appendChild(turnDisplay);
         return playerTurn;
-    };
-
+        }
     return playerTurn, getTurn(turn);
 };
 
-
 // Checks player squares against possible win scenarios and declares a winner,
 // disabling buttons from being clicked. Written to accept winning choices in
-// any order (i.e. 123 or 231) (NOT YET WORKING).
+// any order (i.e. 123 or 231).
 function winCheck(allButtons) {
     const p1S = player1.getSquares();
     const p2S = player2.getSquares();
-
+    console.log(turn);
         if ((p1S.includes(`1`) && p1S.includes(`2`) && p1S.includes(`3`)) || 
             (p1S.includes(`4`) && p1S.includes(`5`) && p1S.includes(`6`)) || 
             (p1S.includes(`7`) && p1S.includes(`8`) && p1S.includes(`9`)) || 
@@ -89,25 +87,26 @@ function winCheck(allButtons) {
                 turnDisplay.textContent = "Player 2 Wins!";
                 display.appendChild(turnDisplay);
                 return winState;
-        } else if (turn >= 9) {
-            turnDisplay.textContent = "Game over! It's a tie..."
-        };
+        } else if ((winState === false) && (turn >= 8)) {
+            turnDisplay.textContent = "Game over! It's a tie...";
+        }
 };
 
-
 // Adds chosen squares to player choice pool and disables clicked buttons and
-// runs winCheck function (winCheck FUNCTION NOT WORKING).
+// runs winCheck function.
 buttonWrapper.addEventListener("click", choice);
     function choice(button, squares) {
-        const addImage = document.createElement("IMG");
-
         let clickedButton = button.target;
         let square = clickedButton.value;
+        const circleSymbol = document.createTextNode("O");
+        const crossSymbol = document.createTextNode("X");
             if (playerTurn === "Player 1") {
+                clickedButton.append(circleSymbol);
                 player1.giveSquare(square);
                 player1.getSquares();
                 winCheck();
             } else if (playerTurn === "Player 2") {
+                clickedButton.append(crossSymbol);
                 player2.giveSquare(square);
                 player2.getSquares();
                 winCheck();
@@ -119,7 +118,13 @@ buttonWrapper.addEventListener("click", choice);
 // Changes turns when a square is clicked.
 buttonWrapper.addEventListener("click", turnChange)
     function turnChange() {
-        if (winState === false) {
+        if (winState === false && turn >= 8) {
+            const buttons = document.querySelectorAll(`button`);
+                for (button of buttons) {
+                button.classList.add(`disabled`);
+                button.disabled = true;
+                };
+        } else if (winState === false) {
             turn++;
             turnController();
         } else if (winState === true) {
@@ -130,11 +135,12 @@ buttonWrapper.addEventListener("click", turnChange)
             }
         };
             return;
-};
+    };
 
 // Creates players and initializes first turn.
 const player1 = createPlayer(1);
 const player2 = createPlayer(2);
 turnController();
 
-// git message: "Buttons now disable when win state is reached by either player."
+// git message: "Removed svg images in lieu of simple text nodes, buttons now properly disable and display symbols representing players 1 (circle) and 2 (cross), added tie game functionality."
+// notes for next session: Clean up the interface to allow players to put in their names, include a button to start/restart the game and add a display element that shows the results upon game end!
