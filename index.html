@@ -10,6 +10,19 @@
 <body>
     <div id="display">
         <h1 id="boardTitle">Tic-Tac-Toe</h1>
+        <h4 id="p1FormTitle">Enter Player One Name</h4>
+        <form action="example.com/path" method="post" id="p1Form">
+            <label for="p1_name">Player 1 Name:</label>
+            <input type="text" class="names" id="p1_name" placeholder="Debbie">
+            <button type="submit" id="p1NameSubmit">Submit</button>
+        </form>
+        <h4 id="p2FormTitle">Enter Player Two Name</h4>
+        <form action="example.com/path" method="post" id="p2Form">
+            <label for="p2_name">Player 2 Name:</label>
+            <input type="text" class="names" id="p2_name" placeholder="Sam">
+            <button type="submit" id="p2NameSubmit">Submit</button>
+        </form>
+        <button id="start">Start Game</button>
         <div id="board"></div>
         <div id="buttonWrapper"></div>
     </div>

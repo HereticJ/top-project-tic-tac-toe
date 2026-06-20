@@ -1,146 +1,172 @@
-// Game board represents the nine squares available in Tic-Tac-Toe ordered
-// from top left to bottom right, from 1-9.
-const GameBoard = (() => {
-    const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    return { board };
-})();
+const startButton = document.querySelector("#start");
+const names = document.querySelector(".names");
+const p1Namesubmit = document.querySelector("#p1NameSubmit");
+const p2Namesubmit = document.querySelector("#p2NameSubmit");
+let p1Name = document.querySelector("#p1_name");
+let p2Name = document.querySelector("#p2_name");
+p1Name = "Player 1";
+p2Name = "Player 2";
 
-// Creates 9 squares and displays who's turn it is (Player 1 or 2).
-const displayController = (() => {
-    const display = document.querySelector("#display");
-    const turnDisplay = document.createElement("h3");
-    turnDisplay.setAttribute("id", "turnDisplay");
-    turnDisplay.textContent = "Player 1 Choose a Square";
-    display.appendChild(turnDisplay);
-
-    const allButtons = document.querySelector("#buttonWrapper");
-    let squares = [];
-
-    for (let i = 0; i < 9; i++) {
-        let square = document.createElement("button");
-        let squaresDisplay = document.querySelectorAll("button");
-        square.value = (i + 1);
-        squares.push(square.value);
-        allButtons.appendChild(square);
+p1NameSubmit.addEventListener("click", nameSubmit);
+    function nameSubmit() {
+        p1Name = `${p1Name}`
     };
-})();
+p2NameSubmit.addEventListener("click", nameSubmit);
+    function nameSubmit() {
+        p2Name = `${p2Name}`
+    };
 
-let winState = false;
 
-// Initializes first turn and square variable to represent player's choice.
-let turn = 1;
-let playerTurn;
-let square;
+startButton.addEventListener("click", startGame);
+        function startGame() {
+            // Game board represents the nine squares available in Tic-Tac-Toe ordered
+            // from top left to bottom right, from 1-9.
+            const GameBoard = (() => {
+            const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-// Creates player and assigns them an array to store their chosen squares.
-function createPlayer(num) {
-    const newPlayer = "player" + num;
+            return { board };
+    })();
 
-    let squares = [];
-    const getSquares = () => squares;
-    const giveSquare = (square) => { squares.push(square); };
-
-    return { num, newPlayer, getSquares, giveSquare };
-};
-
-// Checks which player's turn it is and updates display.
-function turnController() {
-    const turnCheck = (turn % 2 === 0);
-    function getTurn(turn) {
-        playerTurn = turnCheck ? "Player 2" : "Player 1";
-        turnDisplay.textContent = `${playerTurn} Choose a Square`;
+    // Creates 9 squares and displays who's turn it is (Player 1 or 2).
+    const displayController = (() => {
+        const display = document.querySelector("#display");
+        const turnDisplay = document.createElement("h3");
+        turnDisplay.setAttribute("id", "turnDisplay");
+        turnDisplay.textContent = "Player 1 Choose a Square";
         display.appendChild(turnDisplay);
-        return playerTurn;
-        }
-    return playerTurn, getTurn(turn);
-};
 
-// Checks player squares against possible win scenarios and declares a winner,
-// disabling buttons from being clicked. Written to accept winning choices in
-// any order (i.e. 123 or 231).
-function winCheck(allButtons) {
-    const p1S = player1.getSquares();
-    const p2S = player2.getSquares();
-    console.log(turn);
-        if ((p1S.includes(`1`) && p1S.includes(`2`) && p1S.includes(`3`)) || 
-            (p1S.includes(`4`) && p1S.includes(`5`) && p1S.includes(`6`)) || 
-            (p1S.includes(`7`) && p1S.includes(`8`) && p1S.includes(`9`)) || 
-            (p1S.includes(`1`) && p1S.includes(`4`) && p1S.includes(`7`)) ||
-            (p1S.includes(`2`) && p1S.includes(`5`) && p1S.includes(`8`)) ||
-            (p1S.includes(`3`) && p1S.includes(`6`) && p1S.includes(`9`)) ||
-            (p1S.includes(`1`) && p1S.includes(`5`) && p1S.includes(`9`)) ||
-            (p1S.includes(`3`) && p1S.includes(`5`) && p1S.includes(`7`))) {
-                winState = true;
-                turnDisplay.textContent = "Player 1 Wins!";
-                display.appendChild(turnDisplay);
-                return winState;
-        } else if ((p2S.includes(`1`) && p2S.includes(`2`) && p2S.includes(`3`)) || 
-            (p2S.includes(`4`) && p2S.includes(`5`) && p2S.includes(`6`)) || 
-            (p2S.includes(`7`) && p2S.includes(`8`) && p2S.includes(`9`)) || 
-            (p2S.includes(`1`) && p2S.includes(`4`) && p2S.includes(`7`)) ||
-            (p2S.includes(`2`) && p2S.includes(`5`) && p2S.includes(`8`)) ||
-            (p2S.includes(`3`) && p2S.includes(`6`) && p2S.includes(`9`)) ||
-            (p2S.includes(`1`) && p2S.includes(`5`) && p2S.includes(`9`)) ||
-            (p2S.includes(`3`) && p2S.includes(`5`) && p2S.includes(`7`))) {
-                winState = true;
-                turnDisplay.textContent = "Player 2 Wins!";
-                display.appendChild(turnDisplay);
-                return winState;
-        } else if ((winState === false) && (turn >= 8)) {
-            turnDisplay.textContent = "Game over! It's a tie...";
-        }
-};
+        const gameButtons = document.querySelector("#buttonWrapper");
+        let squareValues = [];
 
-// Adds chosen squares to player choice pool and disables clicked buttons and
-// runs winCheck function.
-buttonWrapper.addEventListener("click", choice);
-    function choice(button, squares) {
-        let clickedButton = button.target;
-        let square = clickedButton.value;
-        const circleSymbol = document.createTextNode("O");
-        const crossSymbol = document.createTextNode("X");
-            if (playerTurn === "Player 1") {
-                clickedButton.append(circleSymbol);
-                player1.giveSquare(square);
-                player1.getSquares();
-                winCheck();
-            } else if (playerTurn === "Player 2") {
-                clickedButton.append(crossSymbol);
-                player2.giveSquare(square);
-                player2.getSquares();
-                winCheck();
-            };
-        clickedButton.classList.add(`disabled`);
-        clickedButton.disabled = true;
+        for (let i = 0; i < 9; i++) {
+            let square = document.createElement("button");
+            square.classList.add("squareButtons");
+            let squaresDisplay = document.querySelectorAll(".squareButtons");
+            square.value = (i + 1);
+            squareValues.push(square.value);
+            gameButtons.appendChild(square);
+        };
+    })();
+
+    startButton.textContent = ("Restart");
+
+    const gameButtons = document.querySelector("#buttonWrapper");
+    let winState = false;
+
+    // Initializes first turn and square variable to represent player's choice.
+    let turn = 1;
+    let playerTurn;
+    let square;
+
+    // Creates player and assigns them an array to store their chosen squares.
+    function createPlayer(num) {
+        const newPlayer = "player" + num;
+
+        let squares = [];
+        const getSquares = () => squares;
+        const giveSquare = (square) => { squares.push(square); };
+
+        return { num, newPlayer, getSquares, giveSquare };
     };
 
-// Changes turns when a square is clicked.
-buttonWrapper.addEventListener("click", turnChange)
-    function turnChange() {
-        if (winState === false && turn >= 8) {
-            const buttons = document.querySelectorAll(`button`);
-                for (button of buttons) {
-                button.classList.add(`disabled`);
-                button.disabled = true;
+    // Checks which player's turn it is and updates display.
+    function turnController() {
+        const turnCheck = (turn % 2 === 0);
+        function getTurn(turn) {
+            playerTurn = turnCheck ? "Player 2" : "Player 1";
+            turnDisplay.textContent = `${playerTurn} Choose a Square`;
+            display.appendChild(turnDisplay);
+            return playerTurn;
+            }
+        return playerTurn, getTurn(turn);
+    };
+
+    // Checks player squares against possible win scenarios and declares a winner,
+    // disabling buttons from being clicked. Written to accept winning choices in
+    // any order (i.e. 123 or 231).
+    function winCheck(gameButtons) {
+        const p1S = player1.getSquares();
+        const p2S = player2.getSquares();
+            if ((p1S.includes(`1`) && p1S.includes(`2`) && p1S.includes(`3`)) || 
+                (p1S.includes(`4`) && p1S.includes(`5`) && p1S.includes(`6`)) || 
+                (p1S.includes(`7`) && p1S.includes(`8`) && p1S.includes(`9`)) || 
+                (p1S.includes(`1`) && p1S.includes(`4`) && p1S.includes(`7`)) ||
+                (p1S.includes(`2`) && p1S.includes(`5`) && p1S.includes(`8`)) ||
+                (p1S.includes(`3`) && p1S.includes(`6`) && p1S.includes(`9`)) ||
+                (p1S.includes(`1`) && p1S.includes(`5`) && p1S.includes(`9`)) ||
+                (p1S.includes(`3`) && p1S.includes(`5`) && p1S.includes(`7`))) {
+                    winState = true;
+                    turnDisplay.textContent = `${p1name} Wins!`;
+                    display.appendChild(turnDisplay);
+                    return winState;
+            } else if ((p2S.includes(`1`) && p2S.includes(`2`) && p2S.includes(`3`)) || 
+                (p2S.includes(`4`) && p2S.includes(`5`) && p2S.includes(`6`)) || 
+                (p2S.includes(`7`) && p2S.includes(`8`) && p2S.includes(`9`)) || 
+                (p2S.includes(`1`) && p2S.includes(`4`) && p2S.includes(`7`)) ||
+                (p2S.includes(`2`) && p2S.includes(`5`) && p2S.includes(`8`)) ||
+                (p2S.includes(`3`) && p2S.includes(`6`) && p2S.includes(`9`)) ||
+                (p2S.includes(`1`) && p2S.includes(`5`) && p2S.includes(`9`)) ||
+                (p2S.includes(`3`) && p2S.includes(`5`) && p2S.includes(`7`))) {
+                    winState = true;
+                    turnDisplay.textContent = "Player 2 Wins!";
+                    display.appendChild(turnDisplay);
+                    return winState;
+            } else if ((winState === false) && (turn >= 8)) {
+                turnDisplay.textContent = "Game over! It's a tie...";
+            }
+    };
+
+    // Adds chosen squares to player choice pool and disables clicked buttons and
+    // runs winCheck function.
+    buttonWrapper.addEventListener("click", choice);
+        function choice(square) {
+            let clickedButton = square.target;
+            let squareChosen = clickedButton.value;
+            const circleSymbol = document.createTextNode("O");
+            const crossSymbol = document.createTextNode("X");
+                if (playerTurn === "Player 1") {
+                    clickedButton.append(circleSymbol);
+                    player1.giveSquare(squareChosen);
+                    player1.getSquares();
+                    winCheck();
+                } else if (playerTurn === "Player 2") {
+                    clickedButton.append(crossSymbol);
+                    player2.giveSquare(squareChosen);
+                    player2.getSquares();
+                    winCheck();
                 };
-        } else if (winState === false) {
-            turn++;
-            turnController();
-        } else if (winState === true) {
-            const buttons = document.querySelectorAll(`button`);
-            for (button of buttons) {
-                button.classList.add(`disabled`);
-                button.disabled = true;
+            clickedButton.classList.add(`disabled`);
+            clickedButton.disabled = true;
+        };
+
+    // Changes turns when a square is clicked.
+    buttonWrapper.addEventListener("click", turnChange)
+        function turnChange() {
+            if (winState === false && turn >= 9) {
+                for (button of gameButtons.childNodes) {
+                    button.classList.add(`disabled`);
+                    button.disabled = true;
+                };
+            } else if (winState === false) {
+                turn++;
+                turnController();
+            } else if (winState === true) {
+                for (button of gameButtons.childNodes) {
+                    button.classList.add(`disabled`);
+                    button.disabled = true;
+                }
             }
         };
-            return;
-    };
 
-// Creates players and initializes first turn.
-const player1 = createPlayer(1);
-const player2 = createPlayer(2);
-turnController();
+    // Creates players and initializes first turn.
+    const player1 = createPlayer(1);
+    const player2 = createPlayer(2);
+    turnController();
 
-// git message: "Removed svg images in lieu of simple text nodes, buttons now properly disable and display symbols representing players 1 (circle) and 2 (cross), added tie game functionality."
-// notes for next session: Clean up the interface to allow players to put in their names, include a button to start/restart the game and add a display element that shows the results upon game end!
+};
+
+
+
+
+// git message: "Added form elements for players to input names, created start button and click functionality, changed "Start Game" text to "Restart" when clicked (does not currently restart game, however, WIP)."

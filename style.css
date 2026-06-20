@@ -4,8 +4,37 @@
     grid-template-rows: 2fr 8fr;
 }
 
+#display {
+    
+}
+
 #boardTitle {
     place-self: center;
+}
+
+#start {
+    display: grid;
+    background-color: #00FFFF;
+    line-height: 30px;
+    padding: 10px;
+    font-size: 24px;
+    color: #333399;
+    border-radius: 30px;
+    margin: 10px;
+    text-justify: center;
+    justify-self: center;
+}
+
+#p1Form {
+    display: grid;
+    justify-self: start;
+    align-self: center;
+}
+
+#p2Form {
+    display: grid;
+    justify-self: end;
+    align-self: center;
 }
 
 #turnDisplay {
@@ -23,7 +52,7 @@
     place-self: center;
 }
 
-button {
+.squareButtons {
     height: 200px;
     width: 200px;
     background-color: #AAFF99;
@@ -31,6 +60,7 @@ button {
 
 .disabled {
     background-color: #FFB3B3;
+    color: black;
     font-size: 180px;
     place-self: center;
 }
