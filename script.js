@@ -1,6 +1,5 @@
-
+const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
-const names = document.querySelector(".names");
 const p1Namesubmit = document.querySelector("#p1NameSubmit");
 const p2Namesubmit = document.querySelector("#p2NameSubmit");
 let p1Name = document.querySelector("#p1_name");
@@ -17,15 +16,15 @@ p2NameSubmit.addEventListener("click", nameSubmit);
         p2Name = `${p2Name}`
     };
 
-
 startButton.addEventListener("click", startGame);
-        function startGame() {
-            // Game board represents the nine squares available in Tic-Tac-Toe ordered
-            // from top left to bottom right, from 1-9.
-            const GameBoard = (() => {
-            const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    function startGame() {
+        buttonHeader.removeChild(startButton);
+        // Game board represents the nine squares available in Tic-Tac-Toe ordered
+        // from top left to bottom right, from 1-9.
+        const GameBoard = (() => {
+        const board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-            return { board };
+        return { board };
     })();
 
     // Creates 9 squares and displays who's turn it is (Player 1 or 2).
@@ -48,8 +47,6 @@ startButton.addEventListener("click", startGame);
             gameButtons.appendChild(square);
         };
     })();
-
-    startButton.textContent = ("Restart");
 
     const gameButtons = document.querySelector("#buttonWrapper");
     let winState = false;
@@ -166,7 +163,4 @@ startButton.addEventListener("click", startGame);
 
 };
 
-
-
-
-// git message: "Added form elements for players to input names, created start button and click functionality, changed "Start Game" text to "Restart" when clicked (does not currently restart game, however, WIP)."
+// git message: "Added CSS display rows and columns, all elements properly aligned, removed start button when clicked."
