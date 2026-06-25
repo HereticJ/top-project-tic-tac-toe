@@ -1,24 +1,21 @@
 const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
-const p1Namesubmit = document.querySelector("#p1NameSubmit");
-const p2Namesubmit = document.querySelector("#p2NameSubmit");
-let p1Name = document.querySelector("#p1_name");
-let p2Name = document.querySelector("#p2_name");
-p1Name = "Player 1";
-p2Name = "Player 2";
+const restartButton = document.createElement("button");
+const p1NameEntry = document.querySelector("#p1NameEntry");
+const p2NameEntry = document.querySelector("#p2NameEntry");
+
 
 p1NameSubmit.addEventListener("click", nameSubmit);
     function nameSubmit() {
-        p1Name = `${p1Name}`
-    };
-p2NameSubmit.addEventListener("click", nameSubmit);
-    function nameSubmit() {
-        p2Name = `${p2Name}`
+        p1ChosenName = document.querySelector(p1Name).value;
+        display.removeChild(p1Name, p1NameSubmit);
+        console.log(p1CustomName);
     };
 
 startButton.addEventListener("click", startGame);
     function startGame() {
         buttonHeader.removeChild(startButton);
+        buttonHeader.appendChild(restartButton);
         // Game board represents the nine squares available in Tic-Tac-Toe ordered
         // from top left to bottom right, from 1-9.
         const GameBoard = (() => {
@@ -59,7 +56,6 @@ startButton.addEventListener("click", startGame);
     // Creates player and assigns them an array to store their chosen squares.
     function createPlayer(num) {
         const newPlayer = "player" + num;
-
         let squares = [];
         const getSquares = () => squares;
         const giveSquare = (square) => { squares.push(square); };
@@ -163,4 +159,4 @@ startButton.addEventListener("click", startGame);
 
 };
 
-// git message: "Added CSS display rows and columns, all elements properly aligned, removed start button when clicked."
+// git message: ""
