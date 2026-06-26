@@ -1,16 +1,35 @@
 const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
 const restartButton = document.createElement("button");
+restartButton.setAttribute("id", "restartButton");
+restartButton.textContent = "Restart";
+
 const p1NameEntry = document.querySelector("#p1NameEntry");
+p1NameEntry.defaultValue = "Player 1";
+console.log(p1NameEntry.defaultValue);
+
 const p2NameEntry = document.querySelector("#p2NameEntry");
+p2NameEntry.defaultValue = "Player 2";
 
 
-p1NameSubmit.addEventListener("click", nameSubmit);
-    function nameSubmit() {
-        p1ChosenName = document.querySelector(p1Name).value;
-        display.removeChild(p1Name, p1NameSubmit);
-        console.log(p1CustomName);
+let p1Name = "Player 1";
+let p2Name = "Player 2";
+const p1NameSubmit = document.querySelector("#p1NameSubmit");
+const p2NameSubmit = document.querySelector("#p2NameSubmit");
+
+p1NameSubmit.addEventListener("click", addName);
+    function addName() {
+        console.log(p1Name);
+
     };
+
+p2NameSubmit.addEventListener("click", addName);
+    function addName() {
+        const p2Name = p2NameEntry.value;
+
+        return { p2Name };
+    };
+
 
 startButton.addEventListener("click", startGame);
     function startGame() {
@@ -56,11 +75,18 @@ startButton.addEventListener("click", startGame);
     // Creates player and assigns them an array to store their chosen squares.
     function createPlayer(num) {
         const newPlayer = "player" + num;
+        let name;
         let squares = [];
         const getSquares = () => squares;
         const giveSquare = (square) => { squares.push(square); };
 
-        return { num, newPlayer, getSquares, giveSquare };
+        if (num === 1) {
+            let name = p1Name;
+        } else if (num === 2) {
+            let name = p2Name;
+        }
+
+        return { num, newPlayer, getSquares, giveSquare, name };
     };
 
     // Checks which player's turn it is and updates display.
@@ -159,4 +185,4 @@ startButton.addEventListener("click", startGame);
 
 };
 
-// git message: ""
+// git message: "Fixed buttons appearing below CSS grid area, re-aligned player name entry boxes."
