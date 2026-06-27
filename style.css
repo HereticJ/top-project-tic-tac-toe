@@ -105,6 +105,8 @@
 }
 
 .disabled {
+    width: 200px;
+    height: 200px;
     background-color: #FFB3B3;
     color: black;
     font-size: 180px;

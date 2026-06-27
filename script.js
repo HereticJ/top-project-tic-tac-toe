@@ -1,35 +1,43 @@
 const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
+startButton.disabled = true;
+
 const restartButton = document.createElement("button");
 restartButton.setAttribute("id", "restartButton");
 restartButton.textContent = "Restart";
 
+const p1NameBox = document.querySelector("#p1NameBox");
 const p1NameEntry = document.querySelector("#p1NameEntry");
-p1NameEntry.defaultValue = "Player 1";
-console.log(p1NameEntry.defaultValue);
-
-const p2NameEntry = document.querySelector("#p2NameEntry");
-p2NameEntry.defaultValue = "Player 2";
-
-
-let p1Name = "Player 1";
-let p2Name = "Player 2";
 const p1NameSubmit = document.querySelector("#p1NameSubmit");
+const p1NameDisplay = document.querySelector("#p1NameDisplay");
+
+const p2NameBox = document.querySelector("#p2NameBox");
+const p2NameEntry = document.querySelector("#p2NameEntry");
 const p2NameSubmit = document.querySelector("#p2NameSubmit");
+const p2NameDisplay = document.querySelector("#p2NameDisplay");
 
-p1NameSubmit.addEventListener("click", addName);
-    function addName() {
-        console.log(p1Name);
 
+p1NameSubmit.addEventListener("click", addP1Name);
+    function addP1Name() {
+        p1NameDisplay.textContent = `${p1NameEntry.value}`;
+        p1NameBox.removeChild(p1NameEntry);
+        p1NameBox.removeChild(p1NameSubmit);
     };
 
-p2NameSubmit.addEventListener("click", addName);
-    function addName() {
-        const p2Name = p2NameEntry.value;
-
-        return { p2Name };
+p2NameSubmit.addEventListener("click", addP2Name);
+    function addP2Name() {
+        p2NameDisplay.textContent = `${p2NameEntry.value}`;
+        p2NameBox.removeChild(p2NameEntry);
+        p2NameBox.removeChild(p2NameSubmit);
     };
 
+function nameCheck() {
+    const startWarning = document.createElement("h5");
+    startWarning.textContent = "Enter Player Names to Start Game";
+    if ((p1NameSubmit == false) || (p2NameSubmit == false)) {
+        startButton.disabled = false;
+    }
+}
 
 startButton.addEventListener("click", startGame);
     function startGame() {
@@ -48,7 +56,7 @@ startButton.addEventListener("click", startGame);
         const display = document.querySelector("#display");
         const turnDisplay = document.createElement("h3");
         turnDisplay.setAttribute("id", "turnDisplay");
-        turnDisplay.textContent = "Player 1 Choose a Square";
+        turnDisplay.textContent = `${p1NameEntry.value} Choose a Square`;
         display.appendChild(turnDisplay);
 
         const gameButtons = document.querySelector("#buttonWrapper");
@@ -63,6 +71,12 @@ startButton.addEventListener("click", startGame);
             gameButtons.appendChild(square);
         };
     })();
+
+    restartButton.addEventListener("click", restart);
+        function restart() {
+            location.reload();
+        };
+        
 
     const gameButtons = document.querySelector("#buttonWrapper");
     let winState = false;
@@ -80,20 +94,15 @@ startButton.addEventListener("click", startGame);
         const getSquares = () => squares;
         const giveSquare = (square) => { squares.push(square); };
 
-        if (num === 1) {
-            let name = p1Name;
-        } else if (num === 2) {
-            let name = p2Name;
-        }
-
-        return { num, newPlayer, getSquares, giveSquare, name };
+        return { num, newPlayer, getSquares, giveSquare };
     };
 
     // Checks which player's turn it is and updates display.
     function turnController() {
         const turnCheck = (turn % 2 === 0);
         function getTurn(turn) {
-            playerTurn = turnCheck ? "Player 2" : "Player 1";
+            playerTurn = turnCheck ? `${p2NameDisplay.textContent}` : 
+            `${p1NameDisplay.textContent}`;
             turnDisplay.textContent = `${playerTurn} Choose a Square`;
             display.appendChild(turnDisplay);
             return playerTurn;
@@ -116,7 +125,7 @@ startButton.addEventListener("click", startGame);
                 (p1S.includes(`1`) && p1S.includes(`5`) && p1S.includes(`9`)) ||
                 (p1S.includes(`3`) && p1S.includes(`5`) && p1S.includes(`7`))) {
                     winState = true;
-                    turnDisplay.textContent = `${p1name} Wins!`;
+                    turnDisplay.textContent = `${p1NameDisplay.textContent} Wins!`;
                     display.appendChild(turnDisplay);
                     return winState;
             } else if ((p2S.includes(`1`) && p2S.includes(`2`) && p2S.includes(`3`)) || 
@@ -128,7 +137,7 @@ startButton.addEventListener("click", startGame);
                 (p2S.includes(`1`) && p2S.includes(`5`) && p2S.includes(`9`)) ||
                 (p2S.includes(`3`) && p2S.includes(`5`) && p2S.includes(`7`))) {
                     winState = true;
-                    turnDisplay.textContent = "Player 2 Wins!";
+                    turnDisplay.textContent = `${p2NameDisplay.textContent} Wins!`;
                     display.appendChild(turnDisplay);
                     return winState;
             } else if ((winState === false) && (turn >= 8)) {
@@ -181,8 +190,9 @@ startButton.addEventListener("click", startGame);
     // Creates players and initializes first turn.
     const player1 = createPlayer(1);
     const player2 = createPlayer(2);
+    nameCheck();
     turnController();
 
 };
 
-// git message: "Fixed buttons appearing below CSS grid area, re-aligned player name entry boxes."
+// git message: "Fixed restart button, fixed player name entries and turn controller display, added start button disable function until player names are filled in (not yet functional)."
