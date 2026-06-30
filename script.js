@@ -1,6 +1,19 @@
 const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
+const namePrompt = document.querySelector("#namePrompt");
 startButton.disabled = true;
+let name1Submitted = false;
+let name2Submitted = false;
+
+function startEnable() {
+    if ((name1Submitted == true) && (name2Submitted == true)) {
+        startButton.disabled = false;
+        namePrompt.textContent = "Ready?";
+        
+    } else {
+        return;
+    }
+};
 
 const restartButton = document.createElement("button");
 restartButton.setAttribute("id", "restartButton");
@@ -16,10 +29,11 @@ const p2NameEntry = document.querySelector("#p2NameEntry");
 const p2NameSubmit = document.querySelector("#p2NameSubmit");
 const p2NameDisplay = document.querySelector("#p2NameDisplay");
 
-
 p1NameSubmit.addEventListener("click", addP1Name);
     function addP1Name() {
         p1NameDisplay.textContent = `${p1NameEntry.value}`;
+        name1Submitted = true;
+        startEnable();
         p1NameBox.removeChild(p1NameEntry);
         p1NameBox.removeChild(p1NameSubmit);
     };
@@ -27,20 +41,15 @@ p1NameSubmit.addEventListener("click", addP1Name);
 p2NameSubmit.addEventListener("click", addP2Name);
     function addP2Name() {
         p2NameDisplay.textContent = `${p2NameEntry.value}`;
+        name2Submitted = true;
+        startEnable();
         p2NameBox.removeChild(p2NameEntry);
         p2NameBox.removeChild(p2NameSubmit);
     };
 
-function nameCheck() {
-    const startWarning = document.createElement("h5");
-    startWarning.textContent = "Enter Player Names to Start Game";
-    if ((p1NameSubmit == false) || (p2NameSubmit == false)) {
-        startButton.disabled = false;
-    }
-}
-
 startButton.addEventListener("click", startGame);
     function startGame() {
+        display.removeChild(namePrompt);
         buttonHeader.removeChild(startButton);
         buttonHeader.appendChild(restartButton);
         // Game board represents the nine squares available in Tic-Tac-Toe ordered
@@ -76,7 +85,6 @@ startButton.addEventListener("click", startGame);
         function restart() {
             location.reload();
         };
-        
 
     const gameButtons = document.querySelector("#buttonWrapper");
     let winState = false;
@@ -153,12 +161,12 @@ startButton.addEventListener("click", startGame);
             let squareChosen = clickedButton.value;
             const circleSymbol = document.createTextNode("O");
             const crossSymbol = document.createTextNode("X");
-                if (playerTurn === "Player 1") {
+                if (playerTurn === `${p1NameDisplay.textContent}`) {
                     clickedButton.append(circleSymbol);
                     player1.giveSquare(squareChosen);
                     player1.getSquares();
                     winCheck();
-                } else if (playerTurn === "Player 2") {
+                } else if (playerTurn === `${p2NameDisplay.textContent}`) {
                     clickedButton.append(crossSymbol);
                     player2.giveSquare(squareChosen);
                     player2.getSquares();
@@ -190,9 +198,8 @@ startButton.addEventListener("click", startGame);
     // Creates players and initializes first turn.
     const player1 = createPlayer(1);
     const player2 = createPlayer(2);
-    nameCheck();
     turnController();
 
 };
 
-// git message: "Fixed restart button, fixed player name entries and turn controller display, added start button disable function until player names are filled in (not yet functional)."
+// git message: "Set start button to disabled until both players enter their names and added display text so players will understand names are needed, just need to fix alignment issues between enabled and disabled squares."

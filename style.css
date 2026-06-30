@@ -53,7 +53,16 @@
 #buttonHeader {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
-    place-self: center;
+    align-self: end;
+    justify-self: center;
+}
+
+#namePrompt {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    align-self: start;
+    justify-self: center;
+    margin: 2px;
 }
 
 #start {
@@ -102,6 +111,7 @@
     height: 200px;
     width: 200px;
     background-color: #AAFF99;
+    place-self: center;
 }
 
 .disabled {
@@ -111,4 +121,5 @@
     color: black;
     font-size: 180px;
     place-self: center;
+
 }
