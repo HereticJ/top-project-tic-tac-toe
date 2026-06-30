@@ -1,15 +1,14 @@
 const buttonHeader = document.querySelector("#buttonHeader");
 const startButton = document.querySelector("#start");
 const namePrompt = document.querySelector("#namePrompt");
-startButton.disabled = true;
+buttonHeader.removeChild(startButton);
 let name1Submitted = false;
 let name2Submitted = false;
 
 function startEnable() {
     if ((name1Submitted == true) && (name2Submitted == true)) {
-        startButton.disabled = false;
+        buttonHeader.appendChild(startButton);
         namePrompt.textContent = "Ready?";
-        
     } else {
         return;
     }
@@ -202,4 +201,4 @@ startButton.addEventListener("click", startGame);
 
 };
 
-// git message: "Set start button to disabled until both players enter their names and added display text so players will understand names are needed, just need to fix alignment issues between enabled and disabled squares."
+// git message: "Alignment fixed, everything appears to be working!"

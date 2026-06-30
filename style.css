@@ -92,6 +92,7 @@
 }
 
 #buttonWrapper {
+    display: grid;
     width: 600px;
     height: 600px;
     grid-column: 2 / 3;
@@ -115,11 +116,8 @@
 }
 
 .disabled {
-    width: 200px;
-    height: 200px;
     background-color: #FFB3B3;
     color: black;
     font-size: 180px;
-    place-self: center;
 
 }
